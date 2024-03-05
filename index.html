@@ -53,7 +53,7 @@
 
         button[type=submit] {display: block;background: #00bcff;border: none;min-width: 180px;font-size: 20px;color: #fff;font-weight: 500;margin-left: 16px;border-radius: 2px;cursor: pointer;transition: .3s;}
 
-        button[type=submit]:hover {
+        button[type=submit]:hover, .download-links a {
             background: #0496cb;
         }
 
@@ -64,6 +64,26 @@
 
         #thumbnailContainer {
             margin-top: 30px;
+        }
+
+        #preloader {
+            margin-top: 20px;
+        }
+
+        .download-links {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .download-links a {
+            color: #fff;
+            background: #00bcff;
+            text-decoration: none;
+            padding: 5px 10px;
+            display: inline-block;
+            margin: 5px;
+            border-radius: 3px;
+            transition: .3s;
         }
     </style>
 </head>
@@ -76,9 +96,18 @@
             <input type="url" id="videoUrl" placeholder="Paste YouTube video URL here" required>
             <button type="submit">Get Thumbnail</button>
         </form>
-        <div id="thumbnailContainer">
-            <div id="preloader" style="display: none;">Loading...</div>
-            <img id="thumbnailImage" src="" alt="Video Thumbnail" style="display: none;">
+
+        <div id="preloader" style="display: none;">Loading...</div>
+        <div style="display: none;" id="thumbnailContainer">
+            <img id="thumbnailImage" src="" alt="Video Thumbnail">
+
+            <div class="download-links">
+                <a id="download-image" download>Download Image</a>
+                <a id="download-video" download>Download Video</a>
+                <a id="download-audio" download>Download Audio</a>
+
+                <div>You can save to your device by right click > Save link as.</div>
+            </div>
         </div>
     </div>
 
@@ -89,7 +118,7 @@
 
             // Display preloader while fetching data
             document.getElementById('preloader').style.display = 'block';
-            document.getElementById('thumbnailImage').style.display = 'none';
+            document.getElementById('thumbnailContainer').style.display = 'none';
 
             try {
                 const response = await fetch(`/thumbnail?url=${videoUrl}`);
@@ -98,9 +127,17 @@
                 const thumbnailContainer = document.getElementById('thumbnailContainer');
                 const thumbnailImage = document.getElementById('thumbnailImage');
                 const preloader = document.getElementById('preloader');
+                const downloadImage = document.getElementById('download-image');
+                const downloadVideo = document.getElementById('download-video');
+                const downloadAudio = document.getElementById('download-audio');
+
+                downloadImage.href = data.thumbnailUrl;
+                downloadVideo.href = data.video;
+                downloadAudio.href = data.audio;
+
 
                 thumbnailImage.src = data.thumbnailUrl;
-                thumbnailImage.style.display = 'block';
+                thumbnailContainer.style.display = 'block';
                 preloader.style.display = 'none';
             } catch (error) {
                 console.error('Error:', error);
