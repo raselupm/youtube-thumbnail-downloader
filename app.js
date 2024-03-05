@@ -16,7 +16,6 @@ app.get('/thumbnail', async (req, res) => {
         thumbnails.reverse();
         // only take first two items in the array
         thumbnails.length = 2;
-        console.log(thumbnails);
         const thumbnailUrl = thumbnails[0].url;
         res.json({ thumbnailUrl });
     } catch (error) {
