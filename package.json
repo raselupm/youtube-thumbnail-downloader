@@ -1,0 +1,16 @@
+{
+  "name": "youtube-thumbnail-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "engines": {
+    "node": ">=18.11.0"
+  },
+  "scripts": {
+    "start": "node --watch app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.3",
+    "ytdl-core": "^4.11.5"
+  }
+}
